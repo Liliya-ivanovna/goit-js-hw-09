@@ -19,7 +19,7 @@ const fp = flatpickr("#datetime-picker",{
     } else{  btnEl.disabled=false;}
   },});
      let intervalId;
-     function onTimeStarted(){btnEl.disabled=false;
+     function onTimeStarted(){
     let now = new Date().getTime();
     let userTime = fp.selectedDates[0].getTime();
     let delta = userTime - now;
