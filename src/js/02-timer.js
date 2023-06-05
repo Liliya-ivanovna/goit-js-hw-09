@@ -6,20 +6,20 @@ const hoursEL=document.querySelector('span[data-hours]');
 const minutesEL=document.querySelector('span[data-minutes]');
 const secondsEl=document.querySelector('span[data-seconds]');
 const btnEl=document.querySelector('button[data-start]');
+btnEl.disabled=true;
 const fp = flatpickr("#datetime-picker",{
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if(selectedDates[0]<new Date()){
+  if(selectedDates[0]<=new Date()){
       Notiflix.Notify.failure("Please choose a date in the future");
       btnEl.disabled=true;
-    }
-    btnEl.disabled=false;
+    } else{  btnEl.disabled=false;}
   },});
      let intervalId;
-     function onTimeStarted(){
+     function onTimeStarted(){btnEl.disabled=false;
     let now = new Date().getTime();
     let userTime = fp.selectedDates[0].getTime();
     let delta = userTime - now;
@@ -34,9 +34,9 @@ const fp = flatpickr("#datetime-picker",{
     }
      btnEl.addEventListener('click', ()=>{
       intervalId=setInterval(()=>
-        onTimeStarted(),1000);
+      onTimeStarted(),1000);
   });
-  
+
      function convertMs(ms) {
       const second = 1000;
       const minute = second * 60;
@@ -52,3 +52,4 @@ const fp = flatpickr("#datetime-picker",{
     function addLeadingZero(value){
       return value.toString().padStart(2,'0');
     }
+   
